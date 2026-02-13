@@ -1,7 +1,7 @@
 import httpx
 from mcp.server.fastmcp import FastMCP
 
-BRIDGE_BASE = "https://mediawiki-bridge.onrender.com"
+BRIDGE_BASE = "The_URL_of_your_mediawiki_bridge"  # e.g. http://localhost:8000
 
 mcp = FastMCP("mediawiki-bridge")
 
