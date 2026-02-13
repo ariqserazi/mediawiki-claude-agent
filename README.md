@@ -1,0 +1,229 @@
+# MediaWiki Claude Desktop MCP Tool
+
+## Overview
+
+This project connects **Claude Desktop** to a deployed **MediaWiki
+Bridge API** using MCP (Model Context Protocol).
+
+It allows Claude Desktop to:
+
+-   Resolve fandom/wiki topics\
+-   Search wiki pages\
+-   Retrieve structured, chunked wiki content\
+-   Use external canonical knowledge directly inside Claude
+    conversations
+
+Claude Desktop cannot call REST APIs directly.\
+This MCP server acts as a local adapter that connects Claude Desktop to
+your deployed MediaWiki Bridge.
+
+------------------------------------------------------------------------
+
+## Architecture
+
+Claude Desktop\
+↓\
+Local MCP Server (this project)\
+↓\
+MediaWiki Bridge (Render deployment)\
+↓\
+Fandom / wiki.gg / Wikipedia APIs
+
+------------------------------------------------------------------------
+
+## Requirements
+
+-   Python 3.9+\
+-   Claude Desktop\
+-   MediaWiki Bridge deployed
+    (e.g. https://mediawiki-bridge.onrender.com)
+
+------------------------------------------------------------------------
+
+# Installation
+
+## 1. Clone the Repository
+
+    git clone https://github.com/YOUR_USERNAME/mediawiki-claude-agent.git
+    cd mediawiki-claude-agent
+
+------------------------------------------------------------------------
+
+## 2. Create Virtual Environment
+
+### macOS / Linux
+
+    python3 -m venv venv
+    source venv/bin/activate
+
+### Windows
+
+    python -m venv venv
+    venv\Scripts\activate
+
+------------------------------------------------------------------------
+
+## 3. Install Dependencies
+
+    pip install -r requirements.txt
+
+This installs:
+
+-   mcp\
+-   httpx
+
+------------------------------------------------------------------------
+
+# Connecting to Claude Desktop
+
+Claude Desktop uses MCP servers defined in a configuration file.\
+The location depends on your operating system.
+
+------------------------------------------------------------------------
+
+## macOS Setup
+
+### 1. Create Config File
+
+    touch ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+Open it:
+
+    open ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+### 2. Add Configuration
+
+Replace paths with your actual absolute paths:
+
+``` json
+{
+  "mcpServers": {
+    "mediawiki": {
+      "command": "/Users/YOUR_USERNAME/path/to/project/venv/bin/python",
+      "args": [
+        "/Users/YOUR_USERNAME/path/to/project/mcp_server.py"
+      ]
+    }
+  }
+}
+```
+
+Important: - Use absolute paths - Do NOT use \~ - Do NOT use relative
+paths
+
+Restart Claude Desktop after saving.
+
+------------------------------------------------------------------------
+
+## Windows Setup
+
+### 1. Navigate to Claude Config Folder
+
+    C:\Users\YOUR_USERNAME\AppData\Roaming\Claude\
+
+Create a file named:
+
+    claude_desktop_config.json
+
+### 2. Add Configuration
+
+Use full Windows paths:
+
+``` json
+{
+  "mcpServers": {
+    "mediawiki": {
+      "command": "C:\\Users\\YOUR_USERNAME\\path\\to\\project\\venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Users\\YOUR_USERNAME\\path\\to\\project\\mcp_server.py"
+      ]
+    }
+  }
+}
+```
+
+Important: - Use double backslashes - Use full absolute paths - Do NOT
+use relative paths
+
+Restart Claude Desktop.
+
+------------------------------------------------------------------------
+
+# Available Tools
+
+Claude Desktop will now have access to:
+
+-   resolve_wiki\
+-   search_wiki\
+-   get_wiki_page
+
+------------------------------------------------------------------------
+
+# Example Prompts
+
+Inside Claude Desktop:
+
+    Resolve Ouran High School Host Club and search for Haruhi Fujioka.
+
+or
+
+    Use the wiki tool to retrieve the Haruhi Fujioka page and analyze contradictions.
+
+Claude will:
+
+1.  Call the MCP tool\
+2.  Fetch data from your deployed MediaWiki Bridge\
+3.  Continue reasoning using structured external data
+
+------------------------------------------------------------------------
+
+# Project Structure
+
+    agent/
+    ├── venv/
+    ├── mcp_server.py
+    ├── requirements.txt
+    ├── main.py
+    ├── .gitignore
+    └── README.md
+
+------------------------------------------------------------------------
+
+# .gitignore
+
+Make sure your `.gitignore` includes:
+
+    venv/
+    .env
+    __pycache__/
+    .DS_Store
+
+------------------------------------------------------------------------
+
+# Troubleshooting
+
+If Claude says the tool failed to start:
+
+-   Check Python path in config\
+-   Make sure venv is activated and dependencies installed\
+-   Test manually:
+
+```{=html}
+<!-- -->
+```
+    source venv/bin/activate
+    python mcp_server.py
+
+If it runs silently, it is working.
+
+------------------------------------------------------------------------
+
+# Summary
+
+This project enables Claude Desktop to use external MediaWiki knowledge
+via:
+
+MCP → HTTP → MediaWiki Bridge → Canonical Wiki APIs
+
+It provides structured, chunk-safe wiki access directly inside Claude
+Desktop.
