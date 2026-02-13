@@ -7,9 +7,9 @@ Bridge API** using MCP (Model Context Protocol).
 
 It allows Claude Desktop to:
 
--   Resolve fandom/wiki topics\
--   Search wiki pages\
--   Retrieve structured, chunked wiki content\
+-   Resolve fandom/wiki topics
+-   Search wiki pages
+-   Retrieve structured, chunked wiki content
 -   Use external canonical knowledge directly inside Claude
     conversations
 
@@ -33,10 +33,10 @@ Fandom / wiki.gg / Wikipedia APIs
 
 ## Requirements
 
--   Python 3.9+\
--   Claude Desktop\
+-   Python 3.9+
+-   Claude Desktop
 -   MediaWiki Bridge deployed
-    (e.g. https://mediawiki-bridge.onrender.com)
+    
 
 ------------------------------------------------------------------------
 
@@ -69,8 +69,31 @@ Fandom / wiki.gg / Wikipedia APIs
 
 This installs:
 
--   mcp\
+-   mcp
 -   httpx
+-   python-dotenv
+
+------------------------------------------------------------------------
+
+# Environment Configuration (.env)
+
+This project uses environment variables to configure the MediaWiki
+Bridge URL.
+
+Inside the project root (same folder as `mcp_server.py`), create a file
+named:
+
+    .env
+
+Add:
+
+    BRIDGE_BASE=https://Your_Media_render_link.com
+
+Do NOT use quotes.\
+Do NOT add spaces around `=`.
+
+If you deploy staging, production, or local bridge versions, simply
+change this value without modifying code.
 
 ------------------------------------------------------------------------
 
@@ -108,8 +131,11 @@ Replace paths with your actual absolute paths:
 }
 ```
 
-Important: - Use absolute paths - Do NOT use \~ - Do NOT use relative
-paths
+Important:
+
+-   Use absolute paths
+-   Do NOT use `~`
+-   Do NOT use relative paths
 
 Restart Claude Desktop after saving.
 
@@ -121,7 +147,7 @@ Restart Claude Desktop after saving.
 
     C:\Users\YOUR_USERNAME\AppData\Roaming\Claude\
 
-Create a file named:
+Create:
 
     claude_desktop_config.json
 
@@ -142,8 +168,11 @@ Use full Windows paths:
 }
 ```
 
-Important: - Use double backslashes - Use full absolute paths - Do NOT
-use relative paths
+Important:
+
+-   Use double backslashes
+-   Use full absolute paths
+-   Do NOT use relative paths
 
 Restart Claude Desktop.
 
@@ -153,8 +182,8 @@ Restart Claude Desktop.
 
 Claude Desktop will now have access to:
 
--   resolve_wiki\
--   search_wiki\
+-   resolve_wiki
+-   search_wiki
 -   get_wiki_page
 
 ------------------------------------------------------------------------
@@ -171,8 +200,8 @@ or
 
 Claude will:
 
-1.  Call the MCP tool\
-2.  Fetch data from your deployed MediaWiki Bridge\
+1.  Call the MCP tool
+2.  Fetch data from your deployed MediaWiki Bridge
 3.  Continue reasoning using structured external data
 
 ------------------------------------------------------------------------
@@ -184,6 +213,7 @@ Claude will:
     ├── mcp_server.py
     ├── requirements.txt
     ├── main.py
+    ├── .env
     ├── .gitignore
     └── README.md
 
@@ -191,7 +221,7 @@ Claude will:
 
 # .gitignore
 
-Make sure your `.gitignore` includes:
+Ensure your `.gitignore` includes:
 
     venv/
     .env
@@ -204,8 +234,9 @@ Make sure your `.gitignore` includes:
 
 If Claude says the tool failed to start:
 
--   Check Python path in config\
--   Make sure venv is activated and dependencies installed\
+-   Check Python path in config
+-   Ensure venv is installed and dependencies installed
+-   Ensure `.env` exists with `BRIDGE_BASE`
 -   Test manually:
 
 ```{=html}
@@ -225,5 +256,5 @@ via:
 
 MCP → HTTP → MediaWiki Bridge → Canonical Wiki APIs
 
-It provides structured, chunk-safe wiki access directly inside Claude
-Desktop.
+The MediaWiki Bridge URL is configured via `.env`, allowing flexible
+environment switching without code changes.
