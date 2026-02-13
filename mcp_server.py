@@ -1,7 +1,14 @@
+import os
 import httpx
+from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 
-BRIDGE_BASE = "The_URL_of_your_mediawiki_bridge"  # e.g. http://localhost:8000
+load_dotenv()
+
+BRIDGE_BASE = os.getenv("BRIDGE_BASE")
+
+if not BRIDGE_BASE:
+    raise ValueError("BRIDGE_BASE not set in environment")
 
 mcp = FastMCP("mediawiki-bridge")
 
