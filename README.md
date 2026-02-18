@@ -259,45 +259,51 @@ MCP → HTTP → MediaWiki Bridge → Canonical Wiki APIs
 The MediaWiki Bridge URL is configured via `.env`, allowing flexible
 environment switching without code changes.
 ----------------------------------------------------------------------------------
-# MediaWiki Claude Desktop MCP Tool --- Windows Setup Guide
+# MediaWiki Claude Desktop MCP Tool — Windows Setup Guide
 
-This guide explains how to correctly connect your MediaWiki MCP server
-to Claude Desktop on Windows.
+This guide explains how to correctly connect your MediaWiki MCP server to Claude Desktop on Windows.
 
-------------------------------------------------------------------------
+---
 
 ## Important Note
 
-Claude Desktop on Windows MSIX installs uses a sandboxed configuration
-folder.\
+Claude Desktop on Windows MSIX installs uses a sandboxed configuration folder.
+
 The correct config path is:
 
-C:`\Users`{=tex}`\YOUR`{=tex}\_USERNAME`\AppData`{=tex}`\Local`{=tex}`\Packages`{=tex}`\Claude`{=tex}\_pzs8sxrjxfjjc`\LocalCache`{=tex}`\Roaming`{=tex}`\Claude`{=tex}\
+```
+C:\Users\YOUR_USERNAME\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude
+```
 
 NOT:
 
-C:`\Users`{=tex}`\YOUR`{=tex}\_USERNAME`\AppData`{=tex}`\Roaming`{=tex}`\Claude`{=tex}\
+```
+C:\Users\YOUR_USERNAME\AppData\Roaming\Claude
+```
 
-------------------------------------------------------------------------
+---
 
-## Step 1 --- Navigate to Claude Config Folder
+## Step 1 — Navigate to Claude Config Folder
 
 Open File Explorer and paste:
 
-%LOCALAPPDATA%`\Packages`{=tex}`\Claude`{=tex}\_pzs8sxrjxfjjc`\LocalCache`{=tex}`\Roaming`{=tex}`\Claude`{=tex}
+```
+%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude
+```
 
 Create a file named:
 
+```
 claude_desktop_config.json
+```
 
-------------------------------------------------------------------------
+---
 
-## Step 2 --- Add MCP Configuration
+## Step 2 — Add MCP Configuration
 
-Paste this configuration and replace YOUR_USERNAME with your Windows
-username:
+Paste this configuration and replace YOUR_USERNAME with your Windows username:
 
-``` json
+```json
 {
   "mcpServers": {
     "mediawiki": {
@@ -313,58 +319,65 @@ username:
 
 Important:
 
--   Use full absolute paths
--   Use double backslashes
--   Do NOT use relative paths
--   Include "-u" for unbuffered stdio
+- Use full absolute paths
+- Use double backslashes
+- Do NOT use relative paths
+- Include "-u" for unbuffered stdio
 
-------------------------------------------------------------------------
+---
 
-## Step 3 --- Create .env File
+## Step 3 — Create .env File
 
 In your project folder:
 
-C:`\Users`{=tex}`\YOUR`{=tex}\_USERNAME`\Tools`{=tex}`\mediawiki`{=tex}-claude-agent\
+```
+C:\Users\YOUR_USERNAME\Tools\mediawiki-claude-agent
+```
 
 Create:
 
+```
 .env
+```
 
 Add:
 
+```
 BRIDGE_BASE=https://your-render-url.onrender.com
+```
 
-------------------------------------------------------------------------
+---
 
-## Step 4 --- Install Dependencies
+## Step 4 — Install Dependencies
 
 Open Command Prompt:
 
-cd
-C:`\Users`{=tex}`\YOUR`{=tex}\_USERNAME`\Tools`{=tex}`\mediawiki`{=tex}-claude-agent
-
-venv`\Scripts`{=tex}`\activate`{=tex}
-
+```
+cd C:\Users\YOUR_USERNAME\Tools\mediawiki-claude-agent
+venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-------------------------------------------------------------------------
+---
 
-## Step 5 --- Test MCP Server
+## Step 5 — Test MCP Server
 
 Run:
 
-venv`\Scripts`{=tex}`\python`{=tex}.exe mcp_server.py
+```
+venv\Scripts\python.exe mcp_server.py
+```
 
 Expected result:
 
--   No output
--   Process stays running
+- No output
+- Process stays running
 
 Press Ctrl+C to stop.
 
-------------------------------------------------------------------------
+---
 
-## Step 6 --- Restart Claude Desktop
+## Step 6 — Restart Claude Desktop
 
 Close Claude Desktop fully.
 
@@ -374,43 +387,54 @@ End all Claude processes.
 
 Restart Claude Desktop.
 
-------------------------------------------------------------------------
+---
 
-## Step 7 --- Verify Connection
+## Step 7 — Verify Connection
 
 Open:
 
+```
 Settings → Developer
+```
 
 You should see:
 
-mediawiki --- Connected
+```
+mediawiki — Connected
+```
 
-------------------------------------------------------------------------
+---
 
-## Step 8 --- Test Tool
+## Step 8 — Test Tool
 
 Example prompt:
 
+```
 Resolve Haruhi Fujioka using the mediawiki tool.
+```
 
 Claude will retrieve data using your MediaWiki Bridge.
 
-------------------------------------------------------------------------
+---
 
 ## Project Structure
 
-C:`\Users`{=tex}`\YOUR`{=tex}\_USERNAME`\Tools`{=tex}`\mediawiki`{=tex}-claude-agent\
-
-├── venv  ├── mcp_server.py\
-├── requirements.txt\
-├── .env
+```
+C:\Users\YOUR_USERNAME\Tools\mediawiki-claude-agent
+│
+├── venv\
+├── mcp_server.py
+├── requirements.txt
+└── .env
+```
 
 Claude config lives separately in:
 
-AppData`\Local`{=tex}`\Packages`{=tex}`\Claude`{=tex}\_pzs8sxrjxfjjc`\LocalCache`{=tex}`\Roaming`{=tex}`\Claude`{=tex}\
+```
+C:\Users\YOUR_USERNAME\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude
+```
 
-------------------------------------------------------------------------
+---
 
 ## Summary
 
