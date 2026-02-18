@@ -14,36 +14,35 @@ mcp = FastMCP("mediawiki-bridge")
 
 
 @mcp.tool()
-async def resolve_wiki(topic: str, wiki: str | None = None):
+async def resolve_wiki(topic: str) -> dict:
     """
-    Resolve a topic to a specific Fandom, wiki.gg, or Wikipedia base.
+    Resolve a topic name to its wiki base URL.
+    Use this first to get the correct wiki URL before searching or fetching pages.
+    - topic: the name of the show, game, or subject (e.g. 'Ouran High School Host Club')
+    Returns the base wiki URL to use in subsequent calls.
     """
-
     async with httpx.AsyncClient() as client:
         r = await client.get(
             f"{BRIDGE_BASE}/resolve",
-            params={"topic": topic, "wiki": wiki},
+            params={"topic": topic},
         )
         return r.json()
 
 
 @mcp.tool()
-async def search_wiki(
-    query: str,
-    topic: str | None = None,
-    wiki: str | None = None,
-    limit: int = 5,
-):
+async def search_wiki(query: str, wiki: str, limit: int = 5) -> dict:
     """
-    Search within a resolved wiki.
+    Search for pages within a wiki.
+    - query: search terms (e.g. 'Haruhi Fujioka gender')
+    - wiki: base wiki URL from resolve_wiki (e.g. 'https://ouran.fandom.com')
+    - limit: number of results to return, default 5, max 20
+    Returns a list of matching page titles and their pageids.
     """
-
     async with httpx.AsyncClient() as client:
         r = await client.get(
             f"{BRIDGE_BASE}/search",
             params={
                 "q": query,
-                "topic": topic,
                 "wiki": wiki,
                 "limit": limit,
             },
@@ -52,26 +51,22 @@ async def search_wiki(
 
 
 @mcp.tool()
-async def get_wiki_page(
-    topic: str | None = None,
-    wiki: str | None = None,
-    title: str | None = None,
-    pageid: int | None = None,
-    chunk: int = 0,
-    chunk_size: int = 8000,
-):
+async def get_page(title: str, wiki: str, chunk: int = 0, chunk_size: int = 8000) -> dict:
     """
-    Retrieve a wiki page using chunked mode.
+    Retrieve the text content of a wiki page in chunks.
+    - title: exact page title (e.g. 'Haruhi Fujioka')
+    - wiki: base wiki URL (e.g. 'https://ouran.fandom.com')
+    - chunk: chunk index starting at 0; increment to get subsequent chunks
+    - chunk_size: characters per chunk, default 8000
+    Always start at chunk=0. Check 'total_chunks' in the response to know how many chunks exist.
+    Increment chunk and call again to retrieve the next portion of the page.
     """
-
     async with httpx.AsyncClient() as client:
         r = await client.get(
             f"{BRIDGE_BASE}/page",
             params={
-                "topic": topic,
-                "wiki": wiki,
                 "title": title,
-                "pageid": pageid,
+                "wiki": wiki,
                 "mode": "chunk",
                 "chunk": chunk,
                 "chunk_size": chunk_size,
