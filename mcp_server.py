@@ -18,7 +18,9 @@ async def resolve_wiki(topic: str) -> dict:
     """
     Resolve a topic name to its wiki base URL.
     Use this first to get the correct wiki URL before searching or fetching pages.
-    - topic: the name of the show, game, or subject (e.g. 'Ouran High School Host Club')
+    - topic: if the user provided a wiki URL (e.g. 'https://my-wiki.fandom.com'), 
+      pass it here directly. Otherwise pass the name of the show, game, or subject 
+      (e.g. 'Ouran High School Host Club')
     Returns the base wiki URL to use in subsequent calls.
     """
     async with httpx.AsyncClient() as client:
