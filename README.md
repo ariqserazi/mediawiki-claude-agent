@@ -343,7 +343,7 @@ Create:
 Add:
 
 ```
-BRIDGE_BASE=https://your-render-url.onrender.com
+BRIDGE_BASE=https://your-render-url.com
 ```
 
 ---
