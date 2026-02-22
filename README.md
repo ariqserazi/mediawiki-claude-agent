@@ -192,11 +192,11 @@ Claude Desktop will now have access to:
 
 Inside Claude Desktop:
 
-    Resolve Ouran High School Host Club and search for Haruhi Fujioka.
+    Resolve Hades The Game and search Zagreus.
 
 or
 
-    Use the wiki tool to retrieve the Haruhi Fujioka page and analyze contradictions.
+    Use the wiki tool to retrieve the Zagreus page and analyze contradictions.
 
 Claude will:
 
