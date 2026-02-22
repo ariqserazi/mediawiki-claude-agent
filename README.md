@@ -431,7 +431,7 @@ C:\Users\YOUR_USERNAME\Tools\mediawiki-claude-agent
 Claude config lives separately in:
 
 ```
-C:\Users\YOUR_USERNAME\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude
+ask me lol :D
 ```
 
 ---
