@@ -410,7 +410,7 @@ mediawiki — Connected
 Example prompt:
 
 ```
-Resolve Haruhi Fujioka using the mediawiki tool.
+Resolve Zagreus using the mediawiki tool.
 ```
 
 Claude will retrieve data using your MediaWiki Bridge.
