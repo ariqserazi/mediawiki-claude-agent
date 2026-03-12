@@ -1,4 +1,4 @@
-# MediaWiki Claude Desktop MCP Tool
+# MediaWiki Claude Desktop MCP Tool (MCP SERVER ADAPTER)
 
 ## Overview
 
