@@ -429,10 +429,8 @@ C:\Users\YOUR_USERNAME\Tools\mediawiki-claude-agent
 ```
 
 Claude config lives separately in:
-
-```
 In a different place if you use windows however for macOS there is no problem getting to the claude config, since its in the claude folder 
-```
+
 
 ---
 
